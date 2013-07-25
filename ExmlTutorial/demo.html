@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../scripts/exml.v0.1.js"></script>
+	<script>
+
+	_sh.app='';
+	_require(_sh.app + "TemplateControl.js");
+	
+	</script>
+</head>
+<body>
+
+<div id="main">
+
+</div>
+
+</body>
+<script>
+
+var APP = new (function(){
+	var that = this;
+	that.demo = null;
+
+	//como ser notificado que o demo mudou
+	//Object.MixIn(this,NotifyPropertyChanged);
+	//GenNotifyProperty(this, "demo", null);
+
+	_require(_sh.app + "demo.js", function () {
+		that.demo = new Demo();
+
+		//como ser notificado que o demo mudou
+		//that.demo.set(loadedDemo);
+
+        $("#main").html(that.demo.$html);
+
+    });
+})();
+
+//ONLOAD -> SEMPRE IGUAL
+jQuery(document).ready(function($){});
+
+</script>
+</html>

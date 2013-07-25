@@ -1,0 +1,30 @@
+<div content="{Nome}">ola</div>
+
+<div content="{Sobrenome}">ola</div>
+
+<div content="{Idade}" style="{boundStyle,create}">ola</div>
+
+<input value="{{Idade->InvertChars}}">
+
+<input value="{{boundStyle}}">
+
+<div items="{Values}">
+	<div class='itemTemplate' name='templateApplication'>
+		<strong content="{|Key}"></strong>
+		<!--
+		<div items="{SubValues}">
+			<div class='itemTemplate'>
+				<strong content="{|Key}"></strong>
+			</div>
+		</div>
+	-->
+	</div>
+</div>
+
+<select items="{Values,text=Key}" value="{{SelectedValue,create}}"></select>
+
+<select items="{Values2}" value="{{SelectedValue,create}}"></select>
+
+<select items="{Values,text=Key,value=Key}" value="{{SelectedValueOther,create}}"></select>
+<!-- dar suporte para {} em listas -->
+<!-- dar suporte para {|SubValues} em listas -->
