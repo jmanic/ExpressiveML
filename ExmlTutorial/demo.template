@@ -1,20 +1,33 @@
-<div content="{Nome}">ola</div>
+{Nome}
+<br><div content="{Nome}">ola</div><br>
 
-<div content="{Sobrenome}">ola</div>
+{Sobrenome}
+<br><div content="{Sobrenome}">ola</div><br>
 
-<div content="{Idade}" style="{boundStyle,create}">ola</div>
+{Idade}
+<br><div content="{Idade}" style="{boundStyle,create}">ola</div><br>
 
-<input value="{{Idade->InvertChars}}">
+{Other.Idade}
+<br><div content="{Other.Idade}">ola</div><br>
 
-<input value="{{boundStyle}}">
+{{Other.Idade}}
+<br><input value="{{Other.Idade}}"><br><br>
 
+{{Idade->InvertChars}}
+<br><input value="{{Idade->InvertChars}}"><br>
+
+{{boundStyle}}
+<br><input value="{{boundStyle}}"><br>
+
+{Values}
+<br>
 <div items="{Values}">
 	<div class='itemTemplate' name='templateApplication'>
-		<strong content="{|Key}"></strong>
+		{|Key}<strong content="{|Key}"></strong><br>
 		<!--
 		<div items="{SubValues}">
 			<div class='itemTemplate'>
-				<strong content="{|Key}"></strong>
+				{|Key}<strong content="{|Key}"></strong>
 			</div>
 		</div>
 	-->

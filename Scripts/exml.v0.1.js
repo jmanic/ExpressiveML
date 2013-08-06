@@ -365,6 +365,34 @@ Binding.GetPropertyByPath = function(source, path) {
     return ret;
 }
 
+Binding.GetPropertyParentByPath = function(source, path) {
+    if (!source || !path || typeof source != "object") {
+        console.log("Binding.GetPropertyByPath with invalid source or path:", source, path);
+        return null;
+    }
+    var originalPath = path;
+    var path = path.split(".");
+
+    if(path.length<2)return source;
+
+    var dc = source;
+    var ret;
+    var p = path.shift();
+
+    do {
+        
+        if(!dc){
+        	console.log(originalPath + " has a null property in its path, parent of ",p);
+        	return null;
+        }
+
+        ret = dc[p];
+        dc = ret&&ret.get ? ret.get() : ret;
+    } while (ret && (p = path.shift()) && path.length > 1);
+
+    return dc.get?dc.get():dc;
+}
+
 
 Binding.list=[];
 Binding.visualParent={};
@@ -378,15 +406,19 @@ Binding.prototype={
 		var self=this;
 		var o = this.options;
 		var tProperty = Binding.GetPropertyByPath(o.dataContextObj, o.targetProperty);
+		var propertyParent = Binding.GetPropertyParentByPath(o.dataContextObj, o.targetProperty);
+
 		//console.log("Binding: " + o.targetProperty + " => " + (tProperty.get?tProperty.get():tProperty));
 
 		if(!tProperty)return;
 		
 		if(o.mode != Binding.Mode.OneTime){
-			if(!o.dataContextObj.PropertyChanged)
+			if(!propertyParent.PropertyChanged)
 				console.warn(o.targetProperty + " can't notify changes! ");
 			
-			o.dataContextObj.PropertyChanged(function(e){self.applyValue(e)});
+			propertyParent.PropertyChanged(function(e){
+				self.applyValue(e);
+			});
 
 		}
 		this.applyValue({name:o.targetProperty});
@@ -419,10 +451,13 @@ Binding.prototype={
 	},
 
 	applyValue:function(a){
-	    var o = this.options;
-	    var $obj = o.$obj;
-	    //console.log(a.name, o.targetProperty);
-		if(a.name !== o.targetProperty)return;
+		var o = this.options;
+		var $obj = o.$obj;
+		//console.log(a.name, o.targetProperty);
+
+		if(a.name !== o.targetProperty)
+			return;
+		
 		var tProperty = Binding.GetPropertyByPath(o.dataContextObj, o.targetProperty);
 		
 		function convert(value){

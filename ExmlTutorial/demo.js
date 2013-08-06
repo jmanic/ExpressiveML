@@ -30,6 +30,8 @@ function Demo(){
     GenNotifyProperty(this,"Values",[{Key:'ola',SubValues:[{Key:'sub1'},{Key:'sub2'}]},{Key:'eme'}]);
 
     GenNotifyProperty(this,"Values2",["aaa","bbb"]);
+
+    GenNotifyProperty(this,"Other", new Other());
     
     //observar alterações a Propriedade "Nome"
     //this.PropertyChanged(function(obj){
@@ -39,6 +41,13 @@ function Demo(){
     this.loadTemplate("demo.template", this);
 }
 Demo.MixIn(TemplateControl, NotifyPropertyChanged);
+
+
+function Other(){
+    console.log(this);
+    GenNotifyProperty(this, "Idade", '15');
+}
+Other.MixIn(NotifyPropertyChanged);
 
 
 //
