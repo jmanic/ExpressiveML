@@ -417,7 +417,13 @@ Binding.prototype={
 				console.warn(o.targetProperty + " can't notify changes! ");
 			
 			propertyParent.PropertyChanged(function(e){
-				self.applyValue(e);
+
+				var propertyParent = Binding.GetPropertyParentByPath(o.dataContextObj, o.targetProperty);
+				
+				if(propertyParent && propertyParent[e.name])
+					self.applyValue({name:o.targetProperty});
+				else
+					self.applyValue(e);
 			});
 
 		}
@@ -457,7 +463,7 @@ Binding.prototype={
 
 		if(a.name !== o.targetProperty)
 			return;
-		
+
 		var tProperty = Binding.GetPropertyByPath(o.dataContextObj, o.targetProperty);
 		
 		function convert(value){
