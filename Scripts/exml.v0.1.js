@@ -261,7 +261,9 @@ Property.prototype={
 	get:function(){},
 	set:function(){},
 	toString:function(){
-		return this.get().toString();
+		var t = this.get();
+		if(t!==null && t!==undefined)t=t.toString();
+		return t;
 	}	
 }
 
